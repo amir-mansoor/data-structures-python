@@ -20,8 +20,6 @@ class Point:
 
 
 
-
-
 # *********** Composition *************
 
 class Shape:
@@ -41,4 +39,69 @@ p3 = Point(23,12)
 
 p = [p1,p2,p3]
 sh = Shape(p)
-print(sh)
+# print(sh)
+
+# we can add methods to class after it has been defined 
+
+def print_points(self):
+    for i in self.points:
+        print(i)
+
+Shape.print_points = print_points
+
+# sh.print_points()
+
+# ************* Inheritence **********
+
+# syntax is slightly different but quite easy
+
+class Triangle(Shape):
+    pass
+
+t = Triangle(p)
+
+# t.print_points()
+
+def get_area(self):
+    vertices = self.points
+    n = len(vertices)
+    a = 0.0
+
+    for i in range(n):
+        j = (i * 1) % n
+        a += abs(vertices[i].x * vertices[j].y - vertices[j].x * vertices[i].y)
+
+    return a / 2.0
+
+Triangle.get_area = get_area
+# print(t.get_area())
+
+# ****** Overridden methods ***********
+
+class Rectangle:
+    def __init__(self,length,width):
+        self.width = width
+        self.length = length
+
+    def area(self):
+        return self.length * self.width
+
+    def perimeter(self):
+        return 2 * self.length + 2 * self.width
+
+    def __str__(self):
+        return "L: " + str(self.length) + " W: " + str(self.width)
+
+rect = Rectangle(2,4)
+# print(rect)
+
+class Square(Rectangle):
+    def __init__(self,length):
+        super().__init__(length,length)
+
+    def __str__(self):
+        return "Square " + super().__str__()
+
+square = Square(5)
+print(square)
+print(square.area())
